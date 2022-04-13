@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 from control_center.endpoints import temp_handler
 from control_center.endpoints import humidity_handler
+from control_center.endpoints import heat_handler
 
 
 class IndicatorsView(APIView):
@@ -16,4 +17,5 @@ class IndicatorsView(APIView):
 
 class StatisticsView(APIView):
     def get(self, request):
-        return render(request, 'html/statistics.html')
+        heat_data = heat_handler()
+        return render(request, 'html/statistics.html', {'data': heat_data})

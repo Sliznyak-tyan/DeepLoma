@@ -9,9 +9,6 @@ def heat_handler():
         data_humidity = requests.get(HEAT_SENSOR_1_URL, verify=False).json()
     except Exception as err:
         print(err)
-    print(data_humidity)
-    time_data = data_humidity['date_n_time']
-    time_data = time_data[:-10]
-    data = {'quantity': data_humidity['Quantity']*0.01, 'date_and_time': time_data}
-    print(data['quantity'])
+    data = [current_data_humidity['Quantity'] for current_data_humidity in data_humidity]
+    print(data)
     return data

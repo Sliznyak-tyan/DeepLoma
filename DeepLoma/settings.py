@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -124,3 +125,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost'
+
+#: Only add pickle to this list if your broker is secured
+#: from unwanted access (see userguide/security.html)
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
+CELERY_TASK_SERIALIZER = 'json'

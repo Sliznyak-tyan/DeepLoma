@@ -30,7 +30,11 @@
                 Статистика
             </button>
         </li>
-        <li>Расписание</li>
+        <li>
+            <button onclick="location.href='http://127.0.0.1:8000/system/schedule/'" id="button" class="button_class">
+                Расписание
+            </button>
+        </li>
         <li>Вход</li>
       </ul>
     </nav>
@@ -106,7 +110,7 @@
                 },
                 series: [{
                     name: 'Гкал',
-                    data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+                    data: [140, 220, 133, 130, 66, 0, 0, 0, 0, 0, 12, {{ data.0 }}]
                 }]
             });
 		</script>

@@ -19,3 +19,7 @@ class StatisticsView(APIView):
     def get(self, request):
         heat_data = heat_handler()
         return render(request, 'html/statistics.html', {'data': heat_data})
+
+class ScheduleView(APIView):
+    def get(self, request):
+        return render(request, 'html/schedule.html')

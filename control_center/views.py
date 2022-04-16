@@ -20,6 +20,9 @@ class StatisticsView(APIView):
         heat_data = heat_handler()
         return render(request, 'html/statistics.html', {'data': heat_data})
 
-class ScheduleView(APIView):
-    def get(self, request):
-        return render(request, 'html/schedule.html')
+
+def schedule_view(request):
+    if request.method == 'POST':
+        print(int(request.POST['temp_value']))
+
+    return render(request, 'html/schedule.html')

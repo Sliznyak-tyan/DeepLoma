@@ -1,3 +1,6 @@
+import json
+import requests
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import render
@@ -5,7 +8,7 @@ from django.shortcuts import render
 from control_center.endpoints import temp_handler
 from control_center.endpoints import humidity_handler
 from control_center.endpoints import heat_handler
-
+from control_center.endpoints import recuperator_get_schedule_handler
 
 class IndicatorsView(APIView):
     def get(self, request):
@@ -22,7 +25,10 @@ class StatisticsView(APIView):
 
 
 def schedule_view(request):
+    schedule = None
     if request.method == 'POST':
-        print(int(request.POST['temp_value']))
+        requests.post("http://127.0.0.1:8088/recuperator/change_schedule/", request.body)
+    else:
+        schedule = recuperator_get_schedule_handler()
 
-    return render(request, 'html/schedule.html')
+    return render(request, 'html/schedule.html', {'schedule': schedule})

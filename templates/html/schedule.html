@@ -112,37 +112,50 @@
                 <script>
                     let max_id = {{ max_id }}
                     function add_row_func() {
-                      var table = document.getElementById("schedule_table");
-                      var row = table.insertRow(-1);
-                      var cell1 = row.insertCell(0);
-                      var cell2 = row.insertCell(1);
-                      var cell3 = row.insertCell(2);
-                      var cell4 = row.insertCell(3);
-                      cell1.innerHTML = document.getElementById("st_name").value;
-                      cell2.innerHTML = document.getElementById("en_name").value;
-                      cell3.innerHTML = document.getElementById("te_name").value;
-                      cell4.innerHTML = '<button id="btn" name="btn" onclick="delete_row(this.parentNode.parentNode.rowIndex,' +
-                          'max_id+1)"><img ' +
-                          'src=https://www.svgrepo.com/show/79440/delete-button.svg height ="20" ' +
-                          'width="20" /></button>';
-                      try {
-                            const response = fetch('http://127.0.0.1:8000/system/schedule/', {
-                              method: 'post',
-                                headers: {
-                                  'Content-Type': 'application/json',
-                                    "X-CSRFToken": getCookie('csrftoken')
-                                },
-                              body: JSON.stringify({
-                                      schedule_status: "add",
-                                      start_time: document.getElementById("st_name").value,
-                                      end_time: document.getElementById("en_name").value,
-                                      temperature: document.getElementById("te_name").value
-                                  })
-                            });
-                            console.log('Completed!', response);
-                          } catch(err) {
-                            console.error(`Error: ${err}`);
-                          }
+                        var st_time =  document.getElementById("st_name").value;
+                        var en_time = document.getElementById("en_name").value;
+                        var temp_value = document.getElementById("te_name").value;
+                        if(en_time > st_time) {
+                            if(time_segments_is_not_intersects(st_time, en_time)) {
+                                var table = document.getElementById("schedule_table");
+                                var row = table.insertRow(-1);
+                                var cell1 = row.insertCell(0);
+                                var cell2 = row.insertCell(1);
+                                var cell3 = row.insertCell(2);
+                                var cell4 = row.insertCell(3);
+                                cell1.innerHTML = st_time
+                                cell2.innerHTML = en_time;
+                                cell3.innerHTML = temp_value;
+                                cell4.innerHTML = '<button id="btn" name="btn" onclick="delete_row(this.parentNode.parentNode.rowIndex,' +
+                                    'max_id+1)"><img ' +
+                                    'src=https://www.svgrepo.com/show/79440/delete-button.svg height ="20" ' +
+                                    'width="20" /></button>';
+                                try {
+                                    const response = fetch('http://127.0.0.1:8000/system/schedule/', {
+                                        method: 'post',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            "X-CSRFToken": getCookie('csrftoken')
+                                        },
+                                        body: JSON.stringify({
+                                            schedule_status: "add",
+                                            start_time: document.getElementById("st_name").value,
+                                            end_time: document.getElementById("en_name").value,
+                                            temperature: document.getElementById("te_name").value
+                                        })
+                                    });
+                                    console.log('Completed!', response);
+                                } catch (err) {
+                                    console.error(`Error: ${err}`);
+                                }
+                            }
+                            else{
+                                alert("Time segment intersects with one of previous!")
+                            }
+                        }
+                        else {
+                            alert("End time is less then start time!")
+                        }
                     }
 
                     function delete_row(num, row_id){
@@ -181,6 +194,17 @@
                             }
                         }
                         return cookieValue;
+                    }
+
+                    function time_segments_is_not_intersects(st_time, en_time){
+                        var table = document.getElementById("schedule_table");
+                        for(var i = 1, row; row = table.rows[i]; i++){
+                            if(!(st_time < row.cells[0].innerText && en_time < row.cells[0].innerText ||
+                                st_time > row.cells[1].innerText && en_time > row.cells[1].innerText)){
+                                    return false;
+                            }
+                        }
+                        return true;
                     }
                 </script>
             </div>

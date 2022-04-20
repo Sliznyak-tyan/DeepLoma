@@ -10,6 +10,7 @@ from control_center.endpoints import humidity_handler
 from control_center.endpoints import heat_handler
 from control_center.endpoints import recuperator_get_schedule_handler
 
+
 class IndicatorsView(APIView):
     def get(self, request):
         temperature_data = temp_handler()

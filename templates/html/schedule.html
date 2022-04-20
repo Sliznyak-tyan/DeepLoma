@@ -100,15 +100,17 @@
                             {{ schedule_element.temperature }}
                         </td>
                         <td>
-                            <button onclick="delete_row(this.parentNode.parentNode.rowIndex)">
+                            <button onclick="delete_row(this.parentNode.parentNode.rowIndex,
+                                    {{ schedule_element.id }})">
                                 <img src=https://www.svgrepo.com/show/79440/delete-button.svg height = "20"
-                                     width = "20" />
+                                     width = "20"  alt=""/>
                             </button>
                         </td>
                     </tr>
                 {% endfor %}
             </table>
                 <script>
+                    let max_id = {{ max_id }}
                     function add_row_func() {
                       var table = document.getElementById("schedule_table");
                       var row = table.insertRow(-1);
@@ -119,7 +121,8 @@
                       cell1.innerHTML = document.getElementById("st_name").value;
                       cell2.innerHTML = document.getElementById("en_name").value;
                       cell3.innerHTML = document.getElementById("te_name").value;
-                      cell4.innerHTML = '<button id="btn" name="btn" onclick="delete_row(this.parentNode.parentNode.rowIndex)"><img ' +
+                      cell4.innerHTML = '<button id="btn" name="btn" onclick="delete_row(this.parentNode.parentNode.rowIndex,' +
+                          'max_id+1)"><img ' +
                           'src=https://www.svgrepo.com/show/79440/delete-button.svg height ="20" ' +
                           'width="20" /></button>';
                       try {
@@ -142,7 +145,7 @@
                           }
                     }
 
-                    function delete_row(num){
+                    function delete_row(num, row_id){
                         document.getElementById("schedule_table").deleteRow(num);
                         try {
                             const response = fetch('http://127.0.0.1:8000/system/schedule/', {
@@ -154,7 +157,7 @@
                               body: JSON.stringify(
                                   {
                                     schedule_status: "delete",
-                                    id: num
+                                    id: row_id
                                   }
                               )
                             });

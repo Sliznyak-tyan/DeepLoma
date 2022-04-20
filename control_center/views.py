@@ -26,9 +26,13 @@ class StatisticsView(APIView):
 
 def schedule_view(request):
     schedule = None
+    max_id = 0
     if request.method == 'POST':
         requests.post("http://127.0.0.1:8088/recuperator/change_schedule/", request.body)
     else:
         schedule = recuperator_get_schedule_handler()
+        if schedule:
+            max_id = max([schedule_element['id'] for schedule_element in schedule])
+            print(max_id)
 
-    return render(request, 'html/schedule.html', {'schedule': schedule})
+    return render(request, 'html/schedule.html', {'schedule': schedule, 'max_id': max_id})

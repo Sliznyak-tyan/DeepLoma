@@ -36,17 +36,26 @@ class StatisticsView(APIView):
 def schedule_view(request):
     if not request.user.is_authenticated:
         return redirect('/system/login/')
-    schedule = None
-    max_id = 0
     if request.method == 'POST':
-        requests.post("http://127.0.0.1:8088/recuperator/change_schedule/", request.body)
+        if request.POST.get('start_time', None):
+            data_to_send = {
+                "schedule_status": "add",
+                "start_time": request.POST['start_time'],
+                "end_time": request.POST['end_time'],
+                "temperature": request.POST['temp_value']
+            }
+            requests.post("http://127.0.0.1:8088/recuperator/change_schedule/", json=data_to_send)
+        else:
+            requests.post("http://127.0.0.1:8088/recuperator/change_schedule/", request.body)
+        schedule = recuperator_get_schedule_handler()
+        return redirect('http://127.0.0.1:8000/system/schedule/', {'schedule': schedule})
     else:
         schedule = recuperator_get_schedule_handler()
         if schedule:
             max_id = max([schedule_element['id'] for schedule_element in schedule])
             print(max_id)
 
-    return render(request, 'html/schedule.html', {'schedule': schedule, 'max_id': max_id})
+    return render(request, 'html/schedule.html', {'schedule': schedule})
 
 
 def login_view(request):

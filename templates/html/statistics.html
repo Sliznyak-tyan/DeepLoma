@@ -3,126 +3,128 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Статистика</title>
 <link href="{% static 'css/statistics_style.css' %}" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
-<div class="div_container">
-<header>
-    <div class="primary_header">
-      <h1 class="title"> Система управления микроклиматом в помещении</h1>
-    </div>
-  <nav class="secondary_header" id="menu">
-      <ul>
-        <li>
-            <button onclick="location.href='http://127.0.0.1:8000/system/indicators/'" id="button" class="button_class">Показатели</button>
-        </li>
-        <li id="active_tab">
-            <button onclick="location.href='http://127.0.0.1:8000/system/statistics/'" id="button" class="button_class">
-                Статистика
-            </button>
-        </li>
-        <li>
-            <button onclick="location.href='http://127.0.0.1:8000/system/schedule/'" id="button" class="button_class">
-                Расписание
-            </button>
-        </li>
-        <li>
-            <button onclick="location.href='http://127.0.0.1:8000/system/logout/'" id="button" class="button_class">
-                Выход
-            </button>
-        </li>
-      </ul>
-    </nav>
-</header>
+    <div class="div_container">
+        <header>
+            <div class="primary_header">
+                <h1 class="title"> Система управления микроклиматом в помещении</h1>
+            </div>
+            <nav class="secondary_header" id="menu">
+                <ul>
+                    <li>
+                        <button onclick="location.href='http://127.0.0.1:8000/system/indicators/'"
+                                id="button" class="button_class">
+                            Показатели
+                        </button>
+                    </li>
+                    <li id="active_tab">
+                        <button onclick="location.href='http://127.0.0.1:8000/system/statistics/'"
+                                id="button" class="button_class">
+                            Статистика
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="location.href='http://127.0.0.1:8000/system/schedule/'"
+                                id="button" class="button_class">
+                            Расписание
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="location.href='http://127.0.0.1:8000/system/logout/'"
+                                id="button" class="button_class">
+                            Выход
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </header>
 
+        <div class="row">
+            <div class="columns">
+                <div id="diagram" style="height: 500px"></div>
 
-<div class="row">
-    <div class="columns">
-    <div id="container" style="height: 500px"></div>
+                <div>
+                    <figure class="highcharts-figure">
+                        <div id="diagram"></div>
+                    </figure>
 
-    <div>
-        <figure class="highcharts-figure">
-        <div id="container"></div>
-        </figure>
+                    <script type="text/javascript">
+                        Highcharts.chart('diagram', {
+                            chart: {
+                                type: 'column'
+                            },
+                            title: {
+                                text: 'Энергопотребление'
+                            },
+                            xAxis: {
+                                categories: [
+                                    'Январь',
+                                    'Февраль',
+                                    'Март',
+                                    'Апрель',
+                                    'Май',
+                                    'Июнь',
+                                    'Июль',
+                                    'Август',
+                                    'Сентябрь',
+                                    'Октябрь',
+                                    'Ноябрь',
+                                    'Декабрь'
+                                ],
+                                title: {
+                                    text: 'Месяц',
+                                    enabled: false
+                                },
+                                crosshair: false
+                            },
+                            yAxis: {
+                                min: 0,
+                                title: {
+                                    text: 'Гкал'
+                                }
+                            },
+                            legend: {
+                                enabled: false
+                            },
+                            exporting: {
+                                showTable: true,
+                                allowHTML: true,
+                                enabled: false,
+                                tableCaption: false
+                            },
+                            tooltip: {
+                                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                                footerFormat: '</table>',
+                                shared: true,
+                                useHTML: true
+                            },
+                            plotOptions: {
+                                column: {
+                                    pointPadding: 0.2,
+                                    borderWidth: 0
+                                }
+                            },
+                            series: [{
+                                name: 'Гкал',
+                                data: [140, 220, 133, 130, 66, 0, 0, 0, 0, 0, 12, {{ data.0 }}]
+                            }]
+                        });
+                    </script>
 
-        <script type="text/javascript">
-            Highcharts.chart('container', {
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'Энергопотребление'
-                },
-                xAxis: {
-                    categories: [
-                        'Январь',
-                        'Февраль',
-                        'Март',
-                        'Апрель',
-                        'Май',
-                        'Июнь',
-                        'Июль',
-                        'Август',
-                        'Сентябрь',
-                        'Октябрь',
-                        'Ноябрь',
-                        'Декабрь'
-                    ],
-                    title: {
-                        text: 'Месяц',
-                        enabled: false
-                    },
-                    crosshair: false
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: 'Гкал'
-                    }
-                },
-                legend: {
-                    enabled: false
-                },
-                exporting: {
-                    showTable: true,
-                    allowHTML: true,
-                    enabled: false,
-                    tableCaption: false
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                        '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    }
-                },
-                series: [{
-                    name: 'Гкал',
-                    data: [140, 220, 133, 130, 66, 0, 0, 0, 0, 0, 12, {{ data.0 }}]
-                }]
-            });
-		</script>
-
+                </div>
+            </div>
         </div>
     </div>
-
-</div>
-</div>
 </body>
 </html>

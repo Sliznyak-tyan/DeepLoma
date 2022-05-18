@@ -13,9 +13,9 @@
     }
 
 .columns {
-        width: auto;
-
-        font-family: "Source Sans Pro";
+        width: 45%;
+        float: left;
+        font-family: Verdana, sans-serif;
         color: #333333;
         line-height: 24px;
         padding-top: 10px;
@@ -25,13 +25,71 @@
         margin-bottom: 15px;
         padding-left: 0px;
         padding-right: 0px;
-        margin-left:0px;
-        margin-right: 0px;
+        margin-left:10px;
+        margin-right: 50px;
         border: 0px solid;
         padding: 1px;
         margin-bottom: 10px;
         border-radius: 8px;
     }
+
+.columns_shadow {
+        box-shadow: 0px 0px 20px #CCCCCC;
+        border: 0px solid;
+        padding: 1px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+}
+
+.columns_2 {
+        width: 28%;
+        height: 250px;
+        float: left;
+        font-family: Verdana, sans-serif;
+        font-size: 120%;
+        color: #333333;
+        line-height: 24px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        text-align: justify;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        padding-left: 0px;
+        padding-right: 0px;
+        margin-left:20px;
+        margin-right: 10px;
+        border: 0px solid;
+        padding: 1px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 20px #CCCCCC;
+        border: 0px solid;
+        padding: 1px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+    }
+
+.efficiency_font {
+        font-family: Verdana, sans-serif;
+        color: #FFFFFF;
+        font-size: 150%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-top: -10px;
+    }
+
+.font {
+        font-family: Verdana, sans-serif;
+        font-size: 150%;
+}
+
+.row_2 {
+        height: 100px;
+        margin-top: 10px;
+        font-weight: bold;
+        font-size: 80%;
+        text-align: center;
+}
 
 .div_container .secondary_header ul {
         margin-top: 0%;

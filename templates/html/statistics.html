@@ -5,6 +5,11 @@
 <meta charset="utf-8">
 <title>Статистика</title>
 <link href="{% static 'css/statistics_style.css' %}" rel="stylesheet" type="text/css">
+<style>
+    .color{
+        background-color: {{ consumption_data.color }};
+    }
+</style>
 </head>
 
 <body>
@@ -117,11 +122,45 @@
                             },
                             series: [{
                                 name: 'Гкал',
-                                data: [140, 220, 133, 130, 66, 0, 0, 0, 0, 0, 12, {{ data.0 }}]
+                                data: [{{ data.0 }}, {{ data.1 }}, {{ data.2 }}, {{ data.3 }}, {{ data.4 }}, {{ data.5 }},
+                                    {{ data.6 }}, {{ data.7 }}, {{ data.8 }}, {{ data.9 }}, {{ data.10 }}, {{ data.11 }}]
                             }]
                         });
                     </script>
 
+                </div>
+            </div>
+            <div class="columns">
+                <div class="columns_shadow">
+                    <div>
+                        <h4 align="center">Оценка энергоэффективности</h4>
+                    </div>
+                    <div class="row">
+                        <div class="color">
+                            <h3 align="center" class="efficiency_font">{{ consumption_data.class_of_efficiency }}</h3>
+                        </div>
+
+                        <div class="columns_2">
+                            <div class="row_2">
+                               <p>Удельный годовой расход теплоэнергии (Вт*ч/ (кв.м*°С*сутки)):</p>
+                            </div>
+                            <h5 align="center" class="font">{{ consumption_data.specific_annual_consumption }}</h5>
+                        </div>
+
+                        <div class="columns_2">
+                            <div class="row_2">
+                                <p>Потенциал снижения потребления: </p>
+                            </div>
+                            <h5 align="center" class="font">{{ consumption_data.consumption_reduction_potential }}%</h5>
+                        </div>
+
+                        <div class="columns_2">
+                            <div class="row_2">
+                                <p>Целевой уровень экономии:</p>
+                            </div>
+                               <h5 align="center" class="font">{{ consumption_data.target_savings }}%</h5>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
